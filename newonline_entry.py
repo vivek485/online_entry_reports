@@ -705,7 +705,7 @@ def bmw():
         rd =st.text_input(label="RED CATEGORY IN GRMS*")
         wh =st.text_input(label="WHITE CATEGORY IN GRMS*")
         bl = st.text_input(label="BLUE CATEGORY IN GRMS*")
-        #tl = st.text_input(label="TOTAL IN GRMS*")
+        tl = st.text_input(label="TOTAL IN GRMS*")
         lq = st.text_input(label="LIQUID WASTE GENERATED in liters*")
 
 
@@ -730,7 +730,7 @@ def bmw():
                     'RED CATEGORY IN GRMS':rd,
                     'WHITE CATEGORY IN GRMS':wh,
                     'BLUE CATEGORY IN GRMS':bl,
-                    'TOTAL IN GRMS':int(yl)+int(rd)+int(wh)+int(bl),
+                    'TOTAL IN GRMS':tl, #int(yl)+int(rd)+int(wh)+int(bl),
                     'LIQUID WASTE GENERATED':lq}
                 data = ptr_data
                    
