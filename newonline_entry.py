@@ -18,7 +18,7 @@ poshancol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'MALE',	'FEMALE',	'CHILD',	'
 ayuhimcol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'AYUSHMAN_MALE',	'AYUSHMAN_FEMALE',	'AYUSHMAN_CHILD',	'AYUSHMAN_TOTAL',	'HIMCARE_MALE',	'HIMCARE_FEMALE',	'HIMCARE_CHILD',	'HIMCARE_TOTAL']
 anucol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'MARM',	'JALOKA',	'RAKTMOKSHAN',	'ALABU',	'MRITIKA',	'CUPPING',	'AGNIKARMA',	'KSHARKARMA']
 
-KEY =st.secrets.db_key_credentials.mykey
+KEY ='d0k56krgrca_9Z7s5kFcVHdT2CPqTpHavrHahVz6p5uH'#st.secrets.db_key_credentials.mykey
 deta = Deta(KEY)
 def dbfunc(d,data,year,ahc,month):
     global db
@@ -90,11 +90,11 @@ blc = 'SHIMLA'
 
 
 #-------------------------------------------------------------------------
-name_ahc = ['ANUAMBAPUR', 'BALOG', 'BANUTI DEVI', 'BEOLIA', 'BEUNTH', 'BHALOH', 'BHARARA', 'BHARARI', 'CHAKKAR', 'DABRI', 'DARGI', 'DHALLI', 'DUMMI', 'HIMRI', 'HIWAN', 'JABRI', 'JAKHOO', 'JATHIYA DEVI', 'KADHARGHAT', 'KAITHU', 'KALIHATTI', 'KANLOG', 'KHATNOL', 'LOWER BAZAR', 'MAJHIWAR', 'NABHA', 'NEW-SHIMLA', 'OLD JUNGA', 'PAHAL', 'PANTHAGHATI', 'PATGEHAR', 'PEERAN', 'RAMNAGAR', 'SANDOA', 'SANKATMOCHAN', 'SATLAI', 'SHOGHI', 'THAILA', 'TOTU', 'TUTIKANDI', 'U.H.C. LOWER BAZAR',
+name_ahc = ['ANUAMBAPUR', 'AY.HOSP.ROHRU','AY.HOSP.RAMPUR','BALOG', 'BANUTI DEVI', 'BEOLIA', 'BEUNTH', 'BHALOH', 'BHARARA', 'BHARARI', 'CHAKKAR', 'DABRI', 'DARGI', 'DHALLI', 'DUMMI', 'HIMRI', 'HIWAN', 'JABRI', 'JAKHOO', 'JATHIYA DEVI', 'KADHARGHAT', 'KAITHU', 'KALIHATTI', 'KANLOG', 'KHATNOL', 'LOWER BAZAR', 'MAJHIWAR', 'NABHA', 'NEW-SHIMLA', 'OLD JUNGA', 'PAHAL', 'PANTHAGHATI', 'PATGEHAR', 'PEERAN', 'RAMNAGAR', 'SANDOA', 'SANKATMOCHAN', 'SATLAI', 'SHOGHI', 'THAILA', 'TOTU', 'TUTIKANDI', 'U.H.C. LOWER BAZAR',
 'BAMTA',	'BHALOO',	'BHARAN',	'BHARANU',	'C/BAG',	'CHOPAL',	'DHAR CHANDNA',	'HALAU',	'JORNA',	'KHAGNA',	'KHAKHARONA',	'KIARNOO',	'MALTH',	'MAROG',	'NANHAR',	'NERWA',	'PORIYA',	'PULBAHAL',	'SHAMTHA',	'SHILA BAWAT',	'TAILOR',	'TANDAI',	'TIKKAR',
 'ALAWANG',	'BADEON',	'BAGHAL',	'BAGHI',	'BAGRI',	'CHEOG',	'DARKOTI',	'DHARONK',	'KAMAH',	'KHANETI',	'KIAR',	'KIARTOO',	'KUTHAR',	'MAHASU',	'NAGAN',	'PADGAYA',	'PANJANA',	'PURAG',	'RAWLAKIAR',	'SANDHU',	'SAROG',	'SATOG',	'SATANDRI',	'TIYALI',
 'BATHARA',	'BHAMNOLI',	'BHAROG',	'DAGYANA',	'DANSA',	'DARAN',	'DARKALI',	'DELATH',	'DOFDA',	'DUTT NAGAR',	'GAHAN',	'GALANI',	'JAGORI',	'JAROL',	'JAWALDA',	'JUNI',	'KALEDA',	'KANDA',	'KANGAL',	'KANHAR',	'KASHAPAT',	'KATHINE',	'KHAMADI',	'KINNU',	'KKASHAPAT',	'KOOT',	'KUHAL',	'KUNGAL BALTI',	'LABANA',	'LOUGA',	'MAHOLI',	'MUNISH',	'NARAIN',	'NOGLI',	'PHANCHA',	'REOG',	'SANARSA',	'SARPARA',	'SHOLI',	'SURAD',	'THARU',
-'ARHAL',	'AY.HOSP.ROHRU',	'BARARA',	'BASHTARI',	'DHAKRANTU',	'DHAR',	'GAJYANI',	'GHASNI',	'HARWANI',	'JAGTHAN',	'JAKHAR',	'JAKHNOTI',	'JANGLIK',	'JHARAG',	'K/PATHER',	'KADIWAN',	'KHARLA',	'KHAROT',	'KUDDU',	'KUI',	'LAROT',	'MASTOT',	'PANDRANU',	'PRAUNTHI',	'ROHAL',	'S/NAGAR',	'SALNA',	'SARIBASA',	'SAROT',	'SHEELGHAT',	'TIKKARI',	'TURAN']
+'ARHAL',	'AY.HOSP.ROHRU',	'BARARA',	'BASHTARI',	'DHAKRANTU',	'DHAR',	'GAJYANI','GALOT',	'GHASNI',	'HARWANI',	'JAGTHAN',	'JAKHAR',	'JAKHNOTI',	'JANGLIK',	'JHARAG',	'K/PATHER',	'KADIWAN',	'KHARLA',	'KHAROT',	'KUDDU',	'KUI',	'LAROT',	'MASTOT',	'PANDRANU',	'PRAUNTHI',	'ROHAL',	'S/NAGAR',	'SALNA',	'SARIBASA',	'SAROT',	'SHEELGHAT',	'TIKKARI',	'TURAN']
 
 #--------------------------------------------------------------------------
 def select_block(a):
@@ -405,6 +405,7 @@ def home():
         st.dataframe(df5)
         st.write('## Total AHC with opd>300 of District Shimla Blockwise ##')
         st.dataframe(df6)
+   
 
         
 if selected2 == 'Home' :
@@ -1350,8 +1351,115 @@ def consolidated_ayuhim():
     filtered_df = dataframe_explorer(df1)
     st.dataframe(filtered_df,use_container_width=True)
 
+def notsubmitted():
+    st.title('These AHCs have not submitted reports')
 
-button_select =["Monthly PTR", "Geriatric PTR", 'Aadhar Seeded / Saptahic yog','BMW','SAP','TB Mukt','Panchkarma_PTR','Ksharsutra','Anushastra','Poshan','AYUSHMAN_HIMCARE']
+    st.markdown('Name of AHCs')
+    rep = st.selectbox('Choose from below',options=["Monthly PTR", "Geriatric PTR", 'Aadhar Seeded','BMW','SAP','TB Mukt','Poshan','AnuShastra'])
+    
+    if rep == "Monthly PTR":
+    
+    
+        get_pt(d='reports')
+        month = st.selectbox("Month*",options= Month_list)
+        df1 = pd.DataFrame(df)
+        df1=df1[df1['REPORT FOR MONTH OF :-']==month]
+
+        name_submitted = df1['Name of AHC :-']
+        lst = list(name_submitted)
+        notsubmit =sorted (list (set(name_ahc) - set(lst)))
+        txt = (str(len(notsubmit)) + ' AHCs have not submitted reports for '+ month)
+        st.write(f'<h1 style="color:#33ff33;font-size:24px;">{txt}</h1>', unsafe_allow_html=True)
+        st.dataframe(notsubmit,use_container_width=True)
+    elif rep == 'Geriatric PTR':
+        get_pt(d='ger_reports')
+        month = st.selectbox("Month*",options= Month_list)
+        df1 = pd.DataFrame(df)
+        df1=df1[df1['REPORT FOR MONTH OF :-']==month]
+
+        name_submitted = df1['Name of AHC :-']
+        lst = list(name_submitted)
+        notsubmit =sorted (list (set(name_ahc) - set(lst)))
+        txt = (str(len(notsubmit)) + ' AHCs have not submitted reports for '+ month)
+        st.write(f'<h1 style="color:#33ff33;font-size:24px;">{txt}</h1>', unsafe_allow_html=True)
+        st.dataframe(notsubmit,use_container_width=True)
+    elif rep == 'Aadhar Seeded':
+        get_pt(d='adahar_reports')
+        month = st.selectbox("Month*",options= Month_list)
+        df1 = pd.DataFrame(df)
+        df1=df1[df1['MONTH']==month]
+
+        name_submitted = df1['NAME OF AHC']
+        lst = list(name_submitted)
+        notsubmit =sorted (list (set(name_ahc) - set(lst)))
+        txt = (str(len(notsubmit)) + ' AHCs have not submitted reports for '+ month)
+        st.write(f'<h1 style="color:#33ff33;font-size:24px;">{txt}</h1>', unsafe_allow_html=True)
+        st.dataframe(notsubmit,use_container_width=True)
+    elif rep == 'BMW':
+        get_pt(d='bmw_reports')
+        month = st.selectbox("Month*",options= Month_list)
+        df1 = pd.DataFrame(df)
+        df1=df1[df1['MONTH']==month]
+
+        name_submitted = df1['NAME OF AHC']
+        lst = list(name_submitted)
+        notsubmit =sorted (list (set(name_ahc) - set(lst)))
+        txt = (str(len(notsubmit)) + ' AHCs have not submitted reports for '+ month)
+        st.write(f'<h1 style="color:#33ff33;font-size:24px;">{txt}</h1>', unsafe_allow_html=True)
+        st.dataframe(notsubmit,use_container_width=True)
+    elif rep == 'SAP':
+        get_pt(d='sap_reports')
+        month = st.selectbox("Month*",options= Month_list)
+        df1 = pd.DataFrame(df)
+        df1=df1[df1['MONTH']==month]
+
+        name_submitted = df1['NAME OF AHC']
+        lst = list(name_submitted)
+        notsubmit =sorted (list (set(name_ahc) - set(lst)))
+        txt = (str(len(notsubmit)) + ' AHCs have not submitted reports for '+ month)
+        st.write(f'<h1 style="color:#33ff33;font-size:24px;">{txt}</h1>', unsafe_allow_html=True)
+        st.dataframe(notsubmit,use_container_width=True)
+    elif rep == 'TB Mukt':
+        get_pt(d='tb_reports')
+        month = st.selectbox("Month*",options= Month_list)
+        df1 = pd.DataFrame(df)
+        df1=df1[df1['MONTH']==month]
+
+        name_submitted = df1['NAME OF AHC']
+        lst = list(name_submitted)
+        notsubmit =sorted (list (set(name_ahc) - set(lst)))
+        txt = (str(len(notsubmit)) + ' AHCs have not submitted reports for '+ month)
+        st.write(f'<h1 style="color:#33ff33;font-size:24px;">{txt}</h1>', unsafe_allow_html=True)
+        st.dataframe(notsubmit,use_container_width=True)
+    elif rep == 'Poshan':
+        get_pt(d='poshan_reports')
+        month = st.selectbox("Month*",options= Month_list)
+        df1 = pd.DataFrame(df)
+        df1=df1[df1['MONTH']==month]
+
+        name_submitted = df1['NAME OF AHC']
+        lst = list(name_submitted)
+        notsubmit =sorted (list (set(name_ahc) - set(lst)))
+        txt = (str(len(notsubmit)) + ' AHCs have not submitted reports for '+ month)
+        st.write(f'<h1 style="color:#33ff33;font-size:24px;">{txt}</h1>', unsafe_allow_html=True)
+        st.dataframe(notsubmit,use_container_width=True)
+    elif rep == 'AnuShastra':
+        get_pt(d='anu_reports')
+        month = st.selectbox("Month*",options= Month_list)
+        df1 = pd.DataFrame(df)
+        df1=df1[df1['MONTH']==month]
+
+        name_submitted = df1['NAME OF AHC']
+        lst = list(name_submitted)
+        notsubmit =sorted (list (set(name_ahc) - set(lst)))
+        txt = (str(len(notsubmit)) + ' AHCs have not submitted reports for '+ month)
+        st.write(f'<h1 style="color:#33ff33;font-size:24px;">{txt}</h1>', unsafe_allow_html=True)
+        st.dataframe(notsubmit,use_container_width=True)
+
+
+
+
+button_select =["Monthly PTR", "Geriatric PTR", 'Aadhar Seeded / Saptahic yog','BMW','SAP','TB Mukt','Panchkarma_PTR','Ksharsutra','Anushastra','Poshan','AYUSHMAN_HIMCARE','View AHCs who have not submitted reports']
 
 
 if selected2 == 'Consolidated Reports':
@@ -1378,56 +1486,9 @@ if selected2 == 'Consolidated Reports':
         consolidated_ayuhim()
     elif but == 'Anushastra':
         anus()
+    elif but == 'View AHCs who have not submitted reports':
+        notsubmitted()
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # st.title('Consolidated Report of District Shimla')
-    # existingdata = conn.read(worksheet='reports',usecols=list(range(22)),ttl=5)
-    # existingdata = existingdata.dropna(how='all')
-
-    # st.markdown('TOTAL PATIENT TREATED REPORT OF DISTRICT SHIMLA')
-    # df = pd.DataFrame(existingdata).transpose()
-    # df = df.tail(17)
-    # df['Total'] = df.sum(axis=1)
-    # df = df.transpose()
-    # df = df.iloc[-1:]
-    # df.reset_index()
-    # st.write(df)
-
-
-    # df_shimla = existingdata[(existingdata['BLOCK'] == 'SHIMLA')]
-    # df_sandhu = existingdata[(existingdata['BLOCK'] == 'SANDHU')]
-    # df_nerwa = existingdata[(existingdata['BLOCK'] == 'NERWA')]
-    # df_rampur = existingdata[(existingdata['BLOCK'] == 'RAMPUR')]
-    # df_rohru = existingdata[(existingdata['BLOCK'] == 'ROHRU')]    
-    # st.markdown('PTR REPORT OF SHIMLA BLOCK')
-    # st.write(df_shimla)
-    # st.markdown('PTR REPORT OF SANDHU BLOCK')
-    # st.write(df_sandhu)
-    # st.markdown('PTR REPORT OF NERWA BLOCK')
-    # st.write(df_nerwa)
-    # st.markdown('PTR REPORT OF RAMPUR BLOCK')
-    # st.write(df_rampur)
-    # st.markdown('PTR REPORT OF ROHRU BLOCK')
-    # st.write(df_rohru)
-
 
 
 
