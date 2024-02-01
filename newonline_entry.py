@@ -18,7 +18,7 @@ poshancol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'MALE',	'FEMALE',	'CHILD',	'
 ayuhimcol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'AYUSHMAN_MALE',	'AYUSHMAN_FEMALE',	'AYUSHMAN_CHILD',	'AYUSHMAN_TOTAL',	'HIMCARE_MALE',	'HIMCARE_FEMALE',	'HIMCARE_CHILD',	'HIMCARE_TOTAL']
 anucol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'MARM',	'JALOKA',	'RAKTMOKSHAN',	'ALABU',	'MRITIKA',	'CUPPING',	'AGNIKARMA',	'KSHARKARMA']
 
-KEY ='d0k56krgrca_9Z7s5kFcVHdT2CPqTpHavrHahVz6p5uH'#st.secrets.db_key_credentials.mykey
+KEY =st.secrets.db_key_credentials.mykey
 deta = Deta(KEY)
 def dbfunc(d,data,year,ahc,month):
     global db
