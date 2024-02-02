@@ -498,6 +498,9 @@ def ptr():
                 elif int(ptr_data['MALE PATIENTS']) + int(ptr_data['FEMALE PATIENTS'])+ int(ptr_data['CHILD PATIENTS']) != int(ptr_data['TOTAL PATIENTS.1']):
                     st.warning("Kindly check Sum of Male ,Female and Child is not matching with Total...............")
                     st.stop()
+                elif int(ptr_data['TOTAL PATIENTS'])  != int(ptr_data['TOTAL PATIENTS.1']):
+                    st.warning("Kindly check Sum of Male ,Female and Child is not matching with Total of New and Old Patients...............")
+                    st.stop()
 
                 
                 
