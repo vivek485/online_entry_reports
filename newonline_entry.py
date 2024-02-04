@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 from streamlit_option_menu import option_menu
 import pandas as pd
 from streamlit_extras.dataframe_explorer import dataframe_explorer
@@ -17,9 +18,21 @@ kscol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'NEW_OPD',	'OLD_OPD',	'MALE_OPD'
 poshancol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'MALE',	'FEMALE',	'CHILD',	'TOTAL']
 ayuhimcol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'AYUSHMAN_MALE',	'AYUSHMAN_FEMALE',	'AYUSHMAN_CHILD',	'AYUSHMAN_TOTAL',	'HIMCARE_MALE',	'HIMCARE_FEMALE',	'HIMCARE_CHILD',	'HIMCARE_TOTAL']
 anucol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'MARM',	'JALOKA',	'RAKTMOKSHAN',	'ALABU',	'MRITIKA',	'CUPPING',	'AGNIKARMA',	'KSHARKARMA']
-
+campscol=['YEAR',	'BLOCK',	'MONTH','NAME OF CAMP','TOTAL NO OF CAMPS','DATES OF CAMP','PLACE',	'MALE',	'FEMALE','CHILD','TOTAL']
 KEY = st.secrets.db_key_credentials.mykey
 deta = Deta(KEY)
+def get_pt_df(d):
+    global db
+    global deta
+    global df
+    #deta = 
+    db = deta.Base(d)
+
+    db_content = db.fetch().items
+    if d =='reports':
+        df = pd.DataFrame(db_content)
+        return df
+
 def dbfunc(d,data,year,ahc,month):
     global db
     global deta
@@ -68,7 +81,9 @@ def get_pt(d):
     if d =='anu_reports':
         df = pd.DataFrame(db_content,columns=anucol)
         return df    
-
+    if d =='camps_reports':
+        df = pd.DataFrame(db_content,columns=campscol)
+        return df 
 
 st. set_page_config(layout="wide")
 st.title("Reporting of District Shimla")
@@ -84,7 +99,7 @@ name_ahc_nerwa =sorted(['BAMTA',	'BHALOO',	'BHARAN',	'BHARANU',	'C/BAG',	'CHOPAL
 name_ahc_sandhu =sorted(['ALAWANG',	'BADEON',	'BAGHAL',	'BAGHI',	'BAGRI',	'CHEOG',	'DARKOTI',	'DHARONK',	'KAMAH',	'KHANETI',	'KIAR',	'KIARTOO',	'KUTHAR',	'MAHASU',	'NAGAN',	'PADGAYA',	'PANJANA',	'PURAG',	'RAWLAKIAR',	'SANDHU',	'SAROG',	'SATOG',	'SATANDRI',	'TIYALI'])
 name_ahc_rampur = sorted(['AY.HOSP.RAMPUR','BATHARA',	'BHAMNOLI',	'BHAROG',	'DAGYANA',	'DANSA',	'DARAN',	'DARKALI',	'DELATH',	'DOFDA',	'DUTT NAGAR',	'GAHAN',	'GALANI',	'JAGORI',	'JAROL',	'JAWALDA',	'JUNI',	'KALEDA',	'KANDA',	'KANGAL',	'KANHAR',	'KASHAPAT',	'KATHINE',	'KHAMADI',	'KINNU',	'KKASHAPAT',	'KOOT',	'KUHAL',	'KUNGAL BALTI',	'LABANA',	'LOUGA',	'MAHOLI',	'MUNISH',	'NARAIN',	'NOGLI',	'PHANCHA',	'REOG',	'SANARSA',	'SARPARA',	'SHOLI',	'SURAD',	'THARU'])
 name_ahc_rohru =sorted(['ARHAL',	'AY.HOSP.ROHRU',	'BARARA',	'BASHTARI',	'DHAKRANTU',	'DHAR',	'GAJYANI',	'GHASNI',	'HARWANI',	'JAGTHAN',	'JAKHAR',	'JAKHNOTI',	'JANGLIK',	'JHARAG',	'K/PATHER',	'KADIWAN',	'KHARLA',	'KHAROT',	'KUDDU',	'KUI',	'LAROT',	'MASTOT',	'PANDRANU',	'PRAUNTHI',	'ROHAL',	'S/NAGAR',	'SALNA',	'SARIBASA',	'SAROT',	'SHEELGHAT',	'TIKKARI',	'TURAN'])
-
+AHWC_list=sorted(['CHEOG',	'JATHIYA DEVI',	'MAHOLI',	'KANGAL',	'NOGLI',	'PANDRANU',	'SHOGHI',	'BAGHAL',	'BAGHI',	'HALAU',	'SALNA',	'DUMMI',	'THAILA',	'KIARTOO',	'RAWLAKIAR',	'MAHASU',	'SURAD',	'SHOLI',	'BAGRI',	'SHEELGHAT',	'KHAROT',	'NABHA',	'CHAKKAR',	'BAMTA',	'DANSA',	'LAUGA',	'DARKOTI',	'KANDA',	'DOFDA',	'BATHARA',	'MUNISH',	'NARAIN',	'KKASHAPAT',	'DELATH',	'BHAROG',	'DUTT NAGAR',	'SARPARA',	'PHANCHA',	'KOOT',	'KHOOL',	'KALIHATTI',	'SANKATMOCHAN',	'PAHAL',	'KHATNOL',	'KIAR',	'DAGYANA',	'GALANI',	'SATANDRI',	'KADIWAN',	'JAKHOO',	'KAITHU',	'HARWANI',	'BASHTARI',	'KUI',	'NEW-SHIMLA',	'BEOLIA'])
 lt = name_ahc_shimla
 blc = 'SHIMLA'
 
@@ -123,8 +138,8 @@ def select_block(a):
 # op_list = ["Home", "Monthly PTR", "Geriatric PTR", 'Aadhar Seeded / Saptahic yog','BMW','SAP','TB Mukt','Ksharsutra','AnuShastra','Panchkarma_PTR','Poshan','AYUSHMAN_HIMCARE','Edit/View','Consolidated Reports']
 # selected2 = st.radio('Select Option for which you want to fill report',op_list,index=None,horizontal=True)
 
-selected2 = option_menu("AYUSH VIBHAG HIMACHAL PRADESH", ["Home", "Monthly PTR", "Geriatric PTR", 'Aadhar Seeded / Saptahic yog','BMW','SAP','TB Mukt','Ksharsutra','AnuShastra','Panchkarma_PTR','Poshan','AYUSHMAN_HIMCARE','Edit/View','Consolidated Reports'], 
-icons=['house', 'boxes', "boxes", 'boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes'], 
+selected2 = option_menu("AYUSH VIBHAG HIMACHAL PRADESH", ["Home", "Monthly PTR", "Geriatric PTR", 'Aadhar Seeded / Saptahic yog','BMW','SAP','TB Mukt','Ksharsutra','AnuShastra','Panchkarma_PTR','Poshan','AYUSHMAN_HIMCARE','Camps','Edit/View','Consolidated Reports'], 
+icons=['house', 'boxes', "boxes", 'boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes'], 
 menu_icon="cast", default_index=0, orientation="horizontal")
 
 def edit_entry():
@@ -285,15 +300,81 @@ def home():
         df2=pd.DataFrame(df)
         l=sapcol[-1:]
         df2[l]=df2[l].apply(pd.to_numeric,errors='coerce', axis=1)
-        df3=df2.groupby(['BLOCK','MONTH'])[l].sum()
-        df4=df2.groupby(['BLOCK'])[l].sum()
-        df5=df2.groupby(['YEAR'])[l].sum()
-        st.write('## Monthwise / Blockwise Data ##')
-        st.dataframe(df3)
-        st.write('## Total Blockwise Data ##')
-        st.dataframe(df4)
-        st.write('## Total Data of District ##')
-        st.dataframe(df5)
+        df_count = df2[df2['TOTAL BENEFICIARIES'] != 0].dropna()
+        f_df = df_count.copy()
+
+        st.write('## Total SAP Data ##')
+        st.dataframe(f_df)
+        st.write('## Total Group (Month / Block) Total beneficiaries SAP Data ##')
+        df_count2 = f_df.groupby(['BLOCK','MONTH'])['TOTAL BENEFICIARIES'].sum()
+        st.dataframe(df_count2)
+        st.write('## Total beneficiaries SAP Data for Month ##')
+        df_count3 = f_df.groupby(['MONTH'])['TOTAL BENEFICIARIES'].sum()
+        st.dataframe(df_count3)
+        st.write('## Total Type of School visited data till now ##')
+        
+        
+
+        cot_df = f_df[(f_df['TYPE OF SCHOOL']== 'Primary') ]
+        df_count9 = cot_df.groupby(['BLOCK','MONTH'])['TYPE OF SCHOOL'].count()
+        
+
+        df_count_9 =pd.DataFrame(df_count9)
+        df_count_9.rename(columns = {'TYPE OF SCHOOL':'PRIMARY'}, inplace = True)
+        st.write(cot_df)
+        #st.write(df_count_9)
+
+        cot_df1 = f_df[(f_df['TYPE OF SCHOOL']== 'Middle') ]
+        df_count_8 = cot_df1.groupby(['BLOCK','MONTH'])['TYPE OF SCHOOL'].count()
+        df_count_8 = pd.DataFrame(df_count_8)
+        df_count_8.rename(columns = {'TYPE OF SCHOOL':'MIDDLE'}, inplace = True)
+        st.write(cot_df1)
+        #st.write(df_count_8)
+        
+
+        cot_df2 = f_df[(f_df['TYPE OF SCHOOL']== 'Sr Secondary') ]
+        df_count9_1 = cot_df2.groupby(['BLOCK','MONTH'])['TYPE OF SCHOOL'].count()
+        df_count_9_1 =pd.DataFrame(df_count9_1)
+        df_count_9_1.rename(columns = {'TYPE OF SCHOOL':'SR SECONDARY'}, inplace = True)
+        st.write(cot_df2)
+        #st.write(df_count_9_1)
+        
+
+        cot_df3 = f_df[(f_df['TYPE OF SCHOOL']== 'Others') ]
+        df_count9_2 = cot_df3.groupby(['BLOCK','MONTH'])['TYPE OF SCHOOL'].count()
+        df_count_9_2 =pd.DataFrame(df_count9_2)
+        df_count_9_2.rename(columns = {'TYPE OF SCHOOL':'OTHERS'}, inplace = True)
+        st.write(cot_df3)
+        #st.write(df_count_9_2)
+
+        col1, col2, col3 ,col4= st.columns(4)
+
+        with col1:
+            st.header("Primary")
+            st.dataframe(df_count_9)
+
+        with col2:
+            st.header("Middle")
+            st.dataframe(df_count_8)
+
+
+        with col3:
+            st.header("Sr Secondary")
+            st.dataframe(df_count_9_1)
+        with col4:
+            st.header("Others")
+            st.dataframe(df_count_9_2)
+
+
+        st.write('## Total type of School visited till now ##')
+        
+        df_counting = f_df['TYPE OF SCHOOL'].value_counts()
+        st.write(df_counting)
+        
+
+
+
+
     j = st.button('Click to view Total TB Mukt Reports till today')
     if j:
         get_pt(d='tb_reports')
@@ -406,6 +487,28 @@ def home():
         st.dataframe(df5)
         st.write('## Total AHC with opd>300 of District Shimla Blockwise ##')
         st.dataframe(df6)
+    c4 = st.button('Click to view AWHC Total Patients Reports today')
+    if c4:
+        get_pt(d='reports')
+        df_1 = pd.DataFrame(df)
+        #st.write(df_1)
+        filtered_df = df_1[df_1['Name of AHC :-'].isin(AHWC_list)]
+        new_df = filtered_df.copy(deep=True)
+        new_df.reset_index(inplace=True, drop=True)
+        #st.dataframe(filtered_df)
+
+        filtered_df1 = dataframe_explorer(new_df)
+        st.dataframe(filtered_df1,use_container_width=True)
+    v45 = st.button('Click to view Total Camps Reports')
+    if v45:
+        get_pt(d='camps_reports')
+        df_1 = pd.DataFrame(df)
+        #st.write(df_1)
+
+
+        filtered_df1 = dataframe_explorer(df_1)
+        st.dataframe(filtered_df1,use_container_width=True)
+
    
 
         
@@ -586,7 +689,6 @@ def geriatric():
                     'JWAR':jw,
                     'OTHER':ot,
                     'TOTAL':int(nad)+int(pac)+int(rak)+int(shw)+int(mut)+int(tw)+int(er)+int(jw)+int(ot)}
-                
                 # if ptr_data['NEW PATIENTS'] != ptr_data['TOTAL']:
                 #     st.warning("Kindly check New Patients are not matching with total of Nadi Paachan...............")
                 #     st.stop()
@@ -597,6 +699,10 @@ def geriatric():
                 # elif int(ptr_data['MALE PATIENTS']) + int(ptr_data['FEMALE PATIENTS'])+ int(ptr_data['CHILD PATIENTS']) != int(ptr_data['TOTAL PATIENTS.1']):
                 #     st.warning("Kindly check Sum of Male ,Female and Child is not matching with Total...............")
                 #     st.stop()
+                # elif int(ptr_data['TOTAL PATIENTS'])  != int(ptr_data['TOTAL PATIENTS.1']):
+                #     st.warning("Kindly check Sum of Male ,Female and Child is not matching with Total of New and Old Patients...............")
+                #     st.stop()                
+
 
                 
                 
@@ -635,9 +741,11 @@ def adhar():
         #date = st.date_input(label="Enter Date")#,value=datetime.date(2023,1,4))
         month = st.selectbox("Month*",options=Month_list)
         ahc = st.selectbox("Name of AHC/AHWC*",options=lt)
-        #nw_ = st.text_input(label="Total No. of patients attended*")
+        us1 = str(year) + "_" + str(ahc) + '_'+str(month)
+    
         ol_ =st.text_input(label="Total No. of MALE patients attended*")
         t_f =st.text_input(label="Total No. of FEMALE patients attended*")
+        nw = (int(ol_)+int(t_f))
         t_ = st.text_input(label="Total No. of Aadhar seeded beneficiaries*")
         m_ = st.text_input(label="Total No. of beneficiaries having Mob. No.*")
         f_ = st.text_input(label="DATE OF SESSION*")
@@ -649,6 +757,23 @@ def adhar():
 
         st.markdown('**required*')
         submit_button = st.form_submit_button(label='Submit Adhar/Yog Report')
+
+
+
+
+        
+
+        # checkdf = df[df['Name of AHC :-'] == ahc]
+        # va = checkdf.copy()
+        # van = pd.DataFrame(va,columns=['TOTAL PATIENTS'])
+
+    
+            
+
+
+
+
+
         if submit_button:
         #st.write('Submitted........')
 
@@ -657,14 +782,26 @@ def adhar():
         # elif existingdata['REPORT FOR MONTH OF :-'].str.contains(month).any() and existingdata['Name of AHC :-'].str.contains(ahc).any():
         #     st.warning('Select diffrent Month Entry already made')
         #     st.stop()
+
+
             else :
+                get_pt_df('reports')
+
+                df1 = df[df['key']==us1]
+                df2 = df1.copy()
+
+                tp = (df2['TOTAL PATIENTS'].iloc[0])
+                tp = int(tp)
+                war = str(f'You have entered {tp} value in Monthly Patient Treated Report as total of New and Old. This Value will be taken as Total No. of patients attended in this report')
+                st.write(f'<h1 style="color:#fc6532;font-size:24px;">{war}</h1>', unsafe_allow_html=True)                
+                less_value = tp - nw
                 ptr_data ={
                     'YEAR':int(year),
                     'BLOCK':block,
             
                     'MONTH':month,
                     'NAME OF AHC':ahc,
-                    'Total No. of patients attended':int(ol_)+int(t_f),
+                    'Total No. of patients attended':tp,#int(ol_)+int(t_f),
                     'Total No. of MALE patients attended':ol_,
                     'Total No. of FEMALE patients attended':t_f,
                     'Total No. of Aadhar seeded beneficiaries':t_,
@@ -676,8 +813,13 @@ def adhar():
                     'NO OF CHILD BENEFICIARY':pac_,
                     'TOTAL NO OF YOGA BENEFICIARY IN MONTH':int(ts_)+int(nad_)+int(pac_)}
 
+                if int(ptr_data['Total No. of MALE patients attended']) + int(ptr_data['Total No. of FEMALE patients attended']) != tp:
+                    st.warning(f"Kindly check Sum of Male ,Female is not matching with Total of value {tp}...............your sum is {nw} add or subtract {less_value} in Male/Female ")
+                    st.stop()
+
                 data = ptr_data
-                   
+
+
                     
                 dbfunc(d='adahar_reports',data=data,year=year,ahc=ahc,month=month)
 
@@ -1231,6 +1373,70 @@ def anusastra():
 if selected2 == 'AnuShastra':
     anusastra()
 
+
+#-------------------------------------------------------
+def camps():
+    
+    
+    
+    st.title('Camps Report')
+    st.markdown('Enter All Details Below')
+
+    select_block(a='h12')
+
+
+    #name_ahc = ['ANUAMBAPUR', 'BALOG', 'BALOG', 'BANUTI DEVI', 'BEOLIA', 'BEUNTH', 'BHALOH', 'BHARARA', 'BHARARI', 'CHAKKAR', 'DABRI', 'DARGI', 'DHALLI', 'DUMMI', 'HIMRI', 'HIWAN', 'JABRI', 'JAKHOO', 'JATHIYA DEVI', 'KADHARGHAT', 'KAITHU', 'KALIHATTI', 'KANLOG', 'KHATNOL', 'LOWER BAZAR', 'MAJHIWAR', 'NABHA', 'NEW-SHIMLA', 'OLD JUNGA', 'PAHAL', 'PANTHAGHATI', 'PATGEHAR', 'PEERAN', 'RAMNAGAR', 'SANDOA', 'SANKATMOCHAN', 'SATLAI', 'SHOGHI', 'THAILA', 'TOTU', 'TUTIKANDI', 'U.H.C. LOWER BAZAR']
+    with st.form(key='Camps Report'):
+        year = st.selectbox("Year*",options=year_list)
+        block = blc
+        #date = st.date_input(label="Enter Date")#,value=datetime.date(2023,1,4))
+        month = st.selectbox("Month*",options= Month_list)
+        ahc = "--"#st.selectbox("Name of AHC/AHWC*",options=lt)
+        nw =st.text_input(label='NAME OF CAMP*')
+        ol =st.text_input(label='TOTAL NO OF CAMPS*')
+        yl = st.text_input(label="DATES SEPERATED BY COMMA*")
+        rd =st.text_input(label="PLACE*")
+        wh =st.text_input(label="MALE*")
+        bl = st.text_input(label="FEMALE*")
+        nw1 =st.text_input(label='CHILD*')
+        ol1 =st.text_input(label='TOTAL*')
+
+
+        st.markdown('**required*')
+        submit_button = st.form_submit_button(label='SUBMIT CAMP Report')
+        if submit_button:
+        #st.write('Submitted........')
+
+            if not month or not year or not block   or not yl or not rd  or not wh or not bl  or not nw1 or not ol1:
+                st.warning('Ensure all fields are filled')
+        # elif existingdata['REPORT FOR MONTH OF :-'].str.contains(month).any() and existingdata['Name of AHC :-'].str.contains(ahc).any():
+        #     st.warning('Select diffrent Month Entry already made')
+        #     st.stop()
+            else :
+                ptr_data ={
+                    'YEAR':int(year),
+                    'BLOCK':block,
+            
+                    'MONTH':month,
+                    
+                    'NAME OF CAMP':nw,
+                    'TOTAL NO OF CAMPS':ol,
+                    'DATES OF CAMP':yl,
+                    'PLACE':rd,
+                    'MALE':wh,
+                    'FEMALE':bl,
+                    'CHILD':nw1,
+                    'TOTAL':ol1}
+                data = ptr_data
+                   
+                    
+                dbfunc(d='camps_reports',data=data,year=year,ahc=ahc,month=month)
+
+                st.success('Details Successfully Submitted')
+                st.write(pd.DataFrame(data,index=[0]))
+if selected2 == 'Camps':
+    camps()
+#----------------------------------------------------
 def consolidated_ptr():
     
     st.title('Consolidated PTR Report of District Shimla')
