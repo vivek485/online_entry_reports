@@ -1391,7 +1391,7 @@ def camps():
         block = blc
         #date = st.date_input(label="Enter Date")#,value=datetime.date(2023,1,4))
         month = st.selectbox("Month*",options= Month_list)
-        ahc = "--"#st.selectbox("Name of AHC/AHWC*",options=lt)
+        ahc = block#st.selectbox("Name of AHC/AHWC*",options=lt)
         nw =st.text_input(label='NAME OF CAMP*')
         ol =st.text_input(label='TOTAL NO OF CAMPS*')
         yl = st.text_input(label="DATES SEPERATED BY COMMA*")
