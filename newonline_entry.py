@@ -1628,7 +1628,7 @@ def ks():
     st.title('Consolidated Ksharsutra Report of District Shimla')
 
     st.markdown('Ksharsutra  Report')
-    get_pt(d='pk_reports')
+    get_pt(d='ks_reports')
     
     df1 = pd.DataFrame(df)
     filtered_df = dataframe_explorer(df1)
