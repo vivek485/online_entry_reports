@@ -19,7 +19,9 @@ poshancol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'MALE',	'FEMALE',	'CHILD',	'
 ayuhimcol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'AYUSHMAN_MALE',	'AYUSHMAN_FEMALE',	'AYUSHMAN_CHILD',	'AYUSHMAN_TOTAL',	'HIMCARE_MALE',	'HIMCARE_FEMALE',	'HIMCARE_CHILD',	'HIMCARE_TOTAL']
 anucol=['YEAR',	'BLOCK',	'MONTH',	'NAME OF AHC',	'MARM',	'JALOKA',	'RAKTMOKSHAN',	'ALABU',	'MRITIKA',	'CUPPING',	'AGNIKARMA',	'KSHARKARMA']
 campscol=['YEAR',	'BLOCK',	'MONTH','NAME OF CAMP','TOTAL NO OF CAMPS','DATES OF CAMP','PLACE',	'MALE',	'FEMALE','CHILD','TOTAL']
-KEY = st.secrets.db_key_credentials.mykey
+#ipdcol=['YEAR','BLOCK','MONTH','NAME OF AHC','MONTH','IPD_NEW','IPD_OLD','IPD_MALE','IPD_FEMALE','IPD_CHILD','IPD_TOTAL','Geriatric_IPD_NEW','Geriatric_IPD_OLD','Geriatric_IPD_MALE','Geriatric_IPD_FEMALE','Geriatric_IPD_CHILD','Geriatric_IPD_TOTAL']
+
+KEY =st.secrets.db_key_credentials.mykey
 deta = Deta(KEY)
 def get_pt_df(d):
     global db
@@ -84,6 +86,9 @@ def get_pt(d):
     if d =='camps_reports':
         df = pd.DataFrame(db_content,columns=campscol)
         return df 
+    if d =='ptr_ipd_reports':
+        df = pd.DataFrame(db_content)
+        return df
 
 st. set_page_config(layout="wide")
 st.title("Reporting of District Shimla")
@@ -138,8 +143,8 @@ def select_block(a):
 # op_list = ["Home", "Monthly PTR", "Geriatric PTR", 'Aadhar Seeded / Saptahic yog','BMW','SAP','TB Mukt','Ksharsutra','AnuShastra','Panchkarma_PTR','Poshan','AYUSHMAN_HIMCARE','Edit/View','Consolidated Reports']
 # selected2 = st.radio('Select Option for which you want to fill report',op_list,index=None,horizontal=True)
 
-selected2 = option_menu("AYUSH VIBHAG HIMACHAL PRADESH", ["Home", "Monthly PTR", "Geriatric PTR", 'Aadhar Seeded / Saptahic yog','BMW','SAP','TB Mukt','Ksharsutra','AnuShastra','Panchkarma_PTR','Poshan','AYUSHMAN_HIMCARE','Camps','Edit/View','Consolidated Reports'], 
-icons=['house', 'boxes', "boxes", 'boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes'], 
+selected2 = option_menu("AYUSH VIBHAG HIMACHAL PRADESH", ["Home", "Monthly PTR", "Geriatric PTR", 'Aadhar Seeded / Saptahic yog','BMW','SAP','TB Mukt','Ksharsutra','AnuShastra','Panchkarma_PTR','Poshan','AYUSHMAN_HIMCARE','Camps','IPD_PTR/Geriatric_PTR','Edit/View','Consolidated Reports'], 
+icons=['house', 'boxes', "boxes", 'boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes','boxes'], 
 menu_icon="cast", default_index=0, orientation="horizontal")
 
 def edit_entry():
@@ -148,7 +153,7 @@ def edit_entry():
         action = st.selectbox('Choose an action',['Edit Entry','View Entries'])
         if action == 'View Entries':
             st.markdown('Select AHC and report to view entries made...')
-            ac1 = st.selectbox('Choose from below',options=["Monthly PTR", "Geriatric PTR", 'Aadhar Seeded','BMW','SAP','TB Mukt','Ksharsutra','Panchkarma_PTR','Poshan','AYUSHMAN_HIMCARE','AnuShastra'])
+            ac1 = st.selectbox('Choose from below',options=["Monthly PTR", "Geriatric PTR", 'Aadhar Seeded','BMW','SAP','TB Mukt','Ksharsutra','Panchkarma_PTR','Poshan','AYUSHMAN_HIMCARE','AnuShastra','Camps','IPD_PTR/Geriatric_PTR'])
             
             if ac1 == 'Monthly PTR':
                 select_block(a='a1')
@@ -212,6 +217,18 @@ def edit_entry():
                 select_block(a='a8')
                 ahc = st.selectbox('select AHC',options=lt)
                 get_pt(d='anu_reports')
+                st.write(df[df['NAME OF AHC'] == ahc])
+
+            elif ac1 == 'Camps':
+                select_block(a='a9')
+                ahc = st.selectbox('select AHC',options=lt)
+                get_pt(d='camps_reports')
+                st.write(df[df['NAME OF AHC'] == ahc])
+            elif ac1 == 'IPD_PTR/Geriatric_PTR':
+                hosp = ['AYU HOSPITAL ROHRU','AYU HOSPITAL RAMPUR']
+                
+                ahc = st.selectbox('select AHC',options=hosp)
+                get_pt(d='ptr_ipd_reports')
                 st.write(df[df['NAME OF AHC'] == ahc])
 #edit---------------------------------------------------------------------------------------------------------------------------------------   
         
@@ -506,10 +523,18 @@ def home():
         #st.write(df_1)
 
 
-        filtered_df1 = dataframe_explorer(df_1)
+        filtered_df1 = df_1#dataframe_explorer(df_1)
         st.dataframe(filtered_df1,use_container_width=True)
 
-   
+    v46 = st.button('Click to view Total IPD-PTR/Geriatric Reports')
+    if v46:
+        get_pt(d='ptr_ipd_reports')
+        df_1 = pd.DataFrame(df)
+        #st.write(df_1)
+
+
+        filtered_df1 = df_1
+        st.dataframe(filtered_df1,use_container_width=True)   
 
         
 if selected2 == 'Home' :
@@ -619,8 +644,90 @@ def ptr():
 
 if selected2 == 'Monthly PTR':
     ptr()
+#--------------------------------------------------------------------------------------------------------------------------------
+def ipd_ptr():
+    st.title('IPD PTR Report ')
+    st.markdown('Enter All Details Below')
+
+   
+    #st.dataframe(existingdata_ad)
+
+    #Month_list = ['JANUARY','FEBUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER']
+    hosp = ['AYU HOSPITAL ROHRU','AYU HOSPITAL RAMPUR']
+    block = ['SHIMLA']
+    with st.form(key='IPD Report'):
+        year = st.selectbox("Year*",options=year_list)
+        block = st.selectbox('Block',options=block)
+      
+        month = st.selectbox("Month*",options=Month_list)
+        ahc = st.selectbox("Name of AHC/AHWC*",options=hosp)
+        yl = st.text_input(label="IPD_NEW*")
+        rd =st.text_input(label="IPD_OLD*")
+        wh =st.text_input(label="IPD_MALE*")
+        whf =st.text_input(label="IPD_FEMALE*")
+        whc =st.text_input(label="IPD_CHILD*")
+        bl = st.text_input(label="IPD_TOTAL*")
+        yl1 = st.text_input(label="Geriatric_IPD_NEW*")
+        rd1 =st.text_input(label="Geriatric_IPD_OLD*")
+        wh1 =st.text_input(label="Geriatric_IPD_MALE*")
+        whf1 =st.text_input(label="Geriatric_IPD_FEMALE*")
+        whc1 =st.text_input(label="Geriatric_IPD_CHILD*")
+        bl1 = st.text_input(label="Geriatric_IPD_TOTAL*")
 
 
+
+
+        st.markdown('**required*')
+        submit_button = st.form_submit_button(label='Submit IPD PTR / Geriatric PTR Report')
+        if submit_button:
+        #st.write('Submitted........')
+
+            if not month or not year or not block  or not ahc  or not yl or not rd  or not wh or not whf or not whc or not yl1 or not rd1 or not bl  or not rd1  or not whf1 or not whc1 or not bl1   :
+                st.warning('Ensure all fields are filled')
+        # elif existingdata['REPORT FOR MONTH OF :-'].str.contains(month).any() and existingdata['Name of AHC :-'].str.contains(ahc).any():
+        #     st.warning('Select diffrent Month Entry already made')
+        #     st.stop()
+            else :
+                ptr_data ={
+                    'YEAR':int(year),
+                    'BLOCK':block,
+                    
+                    'MONTH':month,
+                    'NAME OF AHC':ahc,
+                    'IPD_NEW':yl,
+                    'IPD_OLD':rd,
+                    'IPD_MALE':wh,
+                    'IPD_FEMALE':whf,
+                    'IPD_CHILD':whc,
+                    'IPD_TOTAL':bl,
+                    'Geriatric_IPD_NEW':yl1,
+                    'Geriatric_IPD_OLD':rd1,
+                    'Geriatric_IPD_MALE':wh1,
+                    'Geriatric_IPD_FEMALE':whf1,
+                    'Geriatric_IPD_CHILD':whc1,
+                    'Geriatric_IPD_TOTAL':bl1}
+                data = ptr_data
+                   
+                    
+                dbfunc(d='ptr_ipd_reports',data=data,year=year,ahc=ahc,month=month)
+
+                st.success('Details Successfully Submitted')
+                st.write(pd.DataFrame(data,index=[0]))
+
+
+
+if selected2 == 'IPD_PTR/Geriatric_PTR':
+    ipd_ptr()
+
+
+
+
+
+
+
+
+
+#----------------------------------------------------------------------------------------------------------------------------------
 def geriatric():
 
     
@@ -1391,7 +1498,7 @@ def camps():
         block = blc
         #date = st.date_input(label="Enter Date")#,value=datetime.date(2023,1,4))
         month = st.selectbox("Month*",options= Month_list)
-        ahc = block#st.selectbox("Name of AHC/AHWC*",options=lt)
+        ahc = bl#st.selectbox("Name of AHC/AHWC*",options=lt)
         nw =st.text_input(label='NAME OF CAMP*')
         ol =st.text_input(label='TOTAL NO OF CAMPS*')
         yl = st.text_input(label="DATES SEPERATED BY COMMA*")
@@ -1583,7 +1690,7 @@ def notsubmitted():
         st.dataframe(notsubmit,use_container_width=True)
     elif rep == 'Geriatric PTR':
         get_pt(d='ger_reports')
-        month = st.selectbox("Month*",options= Month_list)
+        month = st.selectbox("Month*",options= Month_list,key='asrt3')
         df1 = pd.DataFrame(df)
         df1=df1[df1['REPORT FOR MONTH OF :-']==month]
 
@@ -1593,9 +1700,11 @@ def notsubmitted():
         txt = (str(len(notsubmit)) + ' AHCs have not submitted reports for '+ month)
         st.write(f'<h1 style="color:#33ff33;font-size:24px;">{txt}</h1>', unsafe_allow_html=True)
         st.dataframe(notsubmit,use_container_width=True)
+
+
     elif rep == 'Aadhar Seeded':
         get_pt(d='adahar_reports')
-        month = st.selectbox("Month*",options= Month_list)
+        month = st.selectbox("Month*",options= Month_list,key='asrt1')
         df1 = pd.DataFrame(df)
         df1=df1[df1['MONTH']==month]
 
@@ -1605,9 +1714,10 @@ def notsubmitted():
         txt = (str(len(notsubmit)) + ' AHCs have not submitted reports for '+ month)
         st.write(f'<h1 style="color:#33ff33;font-size:24px;">{txt}</h1>', unsafe_allow_html=True)
         st.dataframe(notsubmit,use_container_width=True)
+
     elif rep == 'BMW':
         get_pt(d='bmw_reports')
-        month = st.selectbox("Month*",options= Month_list)
+        month = st.selectbox("Month*",options= Month_list,key='bmw1')
         df1 = pd.DataFrame(df)
         df1=df1[df1['MONTH']==month]
 
