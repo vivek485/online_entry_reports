@@ -829,7 +829,6 @@ if selected2 == "Geriatric PTR":
     geriatric()
 
 
-
 def adhar():
 
     
@@ -852,7 +851,7 @@ def adhar():
     
         ol_ =st.text_input(label="Total No. of MALE patients attended*")
         t_f =st.text_input(label="Total No. of FEMALE patients attended*")
-        nw = (int(ol_)+int(t_f))
+        
         t_ = st.text_input(label="Total No. of Aadhar seeded beneficiaries*")
         m_ = st.text_input(label="Total No. of beneficiaries having Mob. No.*")
         f_ = st.text_input(label="DATE OF SESSION*")
@@ -860,6 +859,7 @@ def adhar():
         ts_ =st.text_input(label="NO OF MALE BENEFICIARY*")
         nad_ = st.text_input(label="NO OF FEMALE BENEFICIARY*")
         pac_ = st.text_input(label="NO OF CHILD BENEFICIARY*")
+        
         #rak_ = st.text_input(label="TOTAL NO OF YOGA BENEFICIARY IN MONTH*")
 
         st.markdown('**required*')
@@ -894,48 +894,53 @@ def adhar():
             else :
                 get_pt_df('reports')
 
-                df1 = df[df['key']==us1]
+                df1 = df[df['key']== us1]
                 df2 = df1.copy()
+                
+                if df2.empty:
+                    st.warning('Kindly fill Monltly Patient Treated Report first')
+                else:
+                    tp = (df2['TOTAL PATIENTS'].iloc[0])
+                    tp = int(tp)
+                    war = str(f'You have entered {tp} value in Monthly Patient Treated Report as total of New and Old. This Value will be taken as Total No. of patients attended in this report')
+                    st.write(f'<h1 style="color:#fc6532;font-size:24px;">{war}</h1>', unsafe_allow_html=True) 
+                    nw = int(ol_) + int(t_f)              
+                    less_value = tp - nw
+                    ptr_data ={
+                        'YEAR':int(year),
+                        'BLOCK':block,
+                
+                        'MONTH':month,
+                        'NAME OF AHC':ahc,
+                        'Total No. of patients attended':tp,#int(ol_)+int(t_f),
+                        'Total No. of MALE patients attended':ol_,
+                        'Total No. of FEMALE patients attended':t_f,
+                        'Total No. of Aadhar seeded beneficiaries':t_,
+                        'Total No. of beneficiaries having Mob. No.':m_,
+                        'DATE OF SESSION':f_,
+                        'TOTAL NO OF SESSION':ch_,
+                        'NO OF MALE BENEFICIARY':ts_,
+                        'NO OF FEMALE BENEFICIARY':nad_,
+                        'NO OF CHILD BENEFICIARY':pac_,
+                        'TOTAL NO OF YOGA BENEFICIARY IN MONTH':int(ts_)+int(nad_)+int(pac_)}
 
-                tp = (df2['TOTAL PATIENTS'].iloc[0])
-                tp = int(tp)
-                war = str(f'You have entered {tp} value in Monthly Patient Treated Report as total of New and Old. This Value will be taken as Total No. of patients attended in this report')
-                st.write(f'<h1 style="color:#fc6532;font-size:24px;">{war}</h1>', unsafe_allow_html=True)                
-                less_value = tp - nw
-                ptr_data ={
-                    'YEAR':int(year),
-                    'BLOCK':block,
-            
-                    'MONTH':month,
-                    'NAME OF AHC':ahc,
-                    'Total No. of patients attended':tp,#int(ol_)+int(t_f),
-                    'Total No. of MALE patients attended':ol_,
-                    'Total No. of FEMALE patients attended':t_f,
-                    'Total No. of Aadhar seeded beneficiaries':t_,
-                    'Total No. of beneficiaries having Mob. No.':m_,
-                    'DATE OF SESSION':f_,
-                    'TOTAL NO OF SESSION':ch_,
-                    'NO OF MALE BENEFICIARY':ts_,
-                    'NO OF FEMALE BENEFICIARY':nad_,
-                    'NO OF CHILD BENEFICIARY':pac_,
-                    'TOTAL NO OF YOGA BENEFICIARY IN MONTH':int(ts_)+int(nad_)+int(pac_)}
+                    if int(ptr_data['Total No. of MALE patients attended']) + int(ptr_data['Total No. of FEMALE patients attended']) != tp:
+                        st.warning(f"Kindly check Sum of Male ,Female is not matching with Total of value {tp}...............your sum is {nw} add or subtract {less_value} in Male/Female ")
+                        st.stop()
 
-                if int(ptr_data['Total No. of MALE patients attended']) + int(ptr_data['Total No. of FEMALE patients attended']) != tp:
-                    st.warning(f"Kindly check Sum of Male ,Female is not matching with Total of value {tp}...............your sum is {nw} add or subtract {less_value} in Male/Female ")
-                    st.stop()
-
-                data = ptr_data
+                    data = ptr_data
 
 
-                    
-                dbfunc(d='adahar_reports',data=data,year=year,ahc=ahc,month=month)
+                        
+                    dbfunc(d='adahar_reports',data=data,year=year,ahc=ahc,month=month)
 
-                st.success('Details Successfully Submitted')
-                st.write(pd.DataFrame(data,index=[0]))
+                    st.success('Details Successfully Submitted')
+                    st.write(pd.DataFrame(data,index=[0]))
 
 
 if selected2 == 'Aadhar Seeded / Saptahic yog':
     adhar()
+
 
 
 def bmw():
