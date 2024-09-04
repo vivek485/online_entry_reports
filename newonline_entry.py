@@ -11,8 +11,10 @@ from appwrite.id import ID
 client = Client()
 client.set_endpoint('https://cloud.appwrite.io/v1')
 client.set_project('66d67eca0028b93eb768')
-k = st.secrets.db_key_credentials.mykey
-client.set_key(k)
+client.set_key(
+    'standard_6c07d1cc4f9016294c0bbc7f2e5142b0fb78aabbc9f60f12c52402192a2eb8e15c9c44ca543e879705b306d87471b26e798e3da3538a9c5982e080a0259197c8e106d1e700a9e9de635e0086fd7fbfed49133e1c2a06d98b5a7fdb28b238029f136ed839bf74303dbdd1a51da42ac906578d95afe3d820250a3477c1e6c994fb')
+
+
 databases = Databases(client)
 
 
