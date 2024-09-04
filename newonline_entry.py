@@ -11,9 +11,8 @@ from appwrite.id import ID
 client = Client()
 client.set_endpoint('https://cloud.appwrite.io/v1')
 client.set_project('66d67eca0028b93eb768')
-client.set_key(
-    'standard_6c07d1cc4f9016294c0bbc7f2e5142b0fb78aabbc9f60f12c52402192a2eb8e15c9c44ca543e879705b306d87471b26e798e3da3538a9c5982e080a0259197c8e106d1e700a9e9de635e0086fd7fbfed49133e1c2a06d98b5a7fdb28b238029f136ed839bf74303dbdd1a51da42ac906578d95afe3d820250a3477c1e6c994fb')
-
+k = st.secrets.db_key_credentials.mykey
+client.set_key(k)
 databases = Databases(client)
 
 
@@ -1782,7 +1781,7 @@ def notsubmitted():
 
 button_select = ["Monthly PTR", "Geriatric PTR", 'Aadhar Seeded / Saptahic yog', 'BMW', 'SAP', 'TB Mukt',
                  'Panchkarma_PTR', 'Ksharsutra', 'Anushastra', 'Poshan', 'AYUSHMAN_HIMCARE',
-                 'View AHCs who have not submitted reports']
+                 'View AHCs who have not submitted reports','old data']
 
 if selected2 == 'Consolidated Reports':
     but = st.radio('Select Option to view Total Consolidated Report', button_select, index=None, horizontal=True)
@@ -1810,6 +1809,76 @@ if selected2 == 'Consolidated Reports':
         anus()
     elif but == 'View AHCs who have not submitted reports':
         notsubmitted()
+    elif but == 'old data':
+        st.write('Adhar report')
+        df = pd.read_json('adahar_reports.json')
+        filtered_df = dataframe_explorer(df)
+        st.dataframe(filtered_df, use_container_width=True,key='w1')
+
+        st.write('Anushastra report')
+        df1 = pd.read_json('bases/anu_reports.json')
+        filtered_df1 = dataframe_explorer(df1)
+        st.dataframe(filtered_df1, use_container_width=True,key='w2')
+
+        st.write('Ayu/Himcare report')
+        df2 = pd.read_json('bases/ayuhim_reports.json')
+        filtered_df2 = dataframe_explorer(df2)
+        st.dataframe(filtered_df2, use_container_width=True,key='w3')
+
+        st.write('BMW report')
+        df3 = pd.read_json('bases/bmw_reports.json')
+        filtered_df3 = dataframe_explorer(df3)
+        st.dataframe(filtered_df3, use_container_width=True,key='w4')
+
+        st.write('camps report')
+        df4 = pd.read_json('bases/camps_reports.json')
+        filtered_df4 = dataframe_explorer(df4)
+        st.dataframe(filtered_df4, use_container_width=True,key='w5')
+
+        st.write('Geriatric report')
+        df5 = pd.read_json('bases/ger_reports.json')
+        filtered_df5 = dataframe_explorer(df5)
+        st.dataframe(filtered_df5, use_container_width=True,key='w6')
+
+        st.write('Ksharsutra report')
+        df6 = pd.read_json('bases/ks_reports.json')
+        filtered_df6 = dataframe_explorer(df6)
+        st.dataframe(filtered_df6, use_container_width=True,key='w7')
+
+        st.write('Panchkarma report')
+        df7 = pd.read_json('bases/pk_reports.json')
+        filtered_df7 = dataframe_explorer(df7)
+        st.dataframe(filtered_df7, use_container_width=True,key='w8')
+
+        st.write('Poshan report')
+        df8 = pd.read_json('bases/poshan_reports.json')
+        filtered_df8 = dataframe_explorer(df8)
+        st.dataframe(filtered_df8, use_container_width=True,key='w9')
+
+        st.write('IPD PTR report')
+        df9 = pd.read_json('bases/ptr_ipd_reports.json')
+        filtered_df9 = dataframe_explorer(df9)
+        st.dataframe(filtered_df9, use_container_width=True,key='w10')
+
+        st.write('PTR report')
+        df10 = pd.read_json('bases/reports.json')
+        filtered_df10 = dataframe_explorer(df10)
+        st.dataframe(filtered_df10, use_container_width=True,key='w11')
+
+        st.write('SAP report')
+        df11 = pd.read_json('bases/sap_reports.json')
+        filtered_df11 = dataframe_explorer(df11)
+        st.dataframe(filtered_df11, use_container_width=True,key='w12')
+
+        st.write('tb report')
+        df12 = pd.read_json('bases/tb_reports.json')
+        filtered_df12 = dataframe_explorer(df12)
+        st.dataframe(filtered_df12, use_container_width=True,key='w13')
+
+
+
+
+
 # def removeentry():
 #
 #     select_block(a='a181')
@@ -1819,3 +1888,4 @@ if selected2 == 'Consolidated Reports':
 #     month = st.selectbox("Month*", options=Month_list)
 #     us = str(year) + "_" + str(ahc) + '_' + str(month)
 #     databases.delete_document(database_id='allreports',collection_id=pt,document_id=us)
+
