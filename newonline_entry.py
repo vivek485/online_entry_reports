@@ -1645,6 +1645,7 @@ def consolidated_ptr():
     st.markdown('PTR Report')
 
     df1 = pd.DataFrame(getdata(a=pt,col=ptrlt))
+    st.write(df1)
     filtered_df = dataframe_explorer(df1)
     st.dataframe(filtered_df, use_container_width=True)
 
